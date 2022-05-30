@@ -3,6 +3,7 @@ import { useQuery } from "react-query"
 
 // Components
 import Item from "./Item/Item"
+import Cart from "./Cart/Cart"
 import Drawer from "@material-ui/core/Drawer"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import Grid from "@material-ui/core/Grid"
@@ -37,24 +38,26 @@ const App = () => {
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0)
-  
-  
-  
+
   const handleAddToCart = (clickedItem: CartItemType) => null
 
-  const handleRemovefromCart = () => null
+  const handleRemoveFromCart = () => null
 
   if (isLoading) return <LinearProgress />
   if (error) return <div>Something went wrong ...</div>
 
   return (
     <Wrapper>
-      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart goes here
+      <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
-      <StyledButton onClick={()=> setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color='error'>
-    <AddShoppingCardIcon />
+      <StyledButton onClick={() => setCartOpen(true)}>
+        <Badge badgeContent={getTotalItems(cartItems)} color="error">
+          <AddShoppingCardIcon />
         </Badge>
       </StyledButton>
       <Grid container spacing={3}>
